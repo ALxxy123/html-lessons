@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دروس HTML التفاعلية | ETRA Academy</title>
+    <meta name="description" content="دروس تفاعلية احترافية لتعلم HTML من الصفر حتى الاحتراف">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- شاشة الترحيب -->
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content">
+            <div class="academy-logo">
+                <span class="logo-icon">🎓</span>
+                <h1>ETRA Academy</h1>
+            </div>
+            <h2>مرحباً بك في رحلة تعلم HTML</h2>
+            <p>دروس تفاعلية احترافية لفهم أساسيات بناء صفحات الويب</p>
+
+            <!-- شريط الإنجازات -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-icon">⭐</span>
+                    <span class="stat-value" id="total-points">0</span>
+                    <span class="stat-label">نقطة</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🏆</span>
+                    <span class="stat-value" id="total-badges">0</span>
+                    <span class="stat-label">إنجاز</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">📚</span>
+                    <span class="stat-value" id="completed-days">0/7</span>
+                    <span class="stat-label">أيام</span>
+                </div>
+            </div>
+
+            <div class="days-grid">
+                <button class="day-card" onclick="selectDay(1)" id="day-card-1">
+                    <div class="day-badge-icon" id="badge-1"></div>
+                    <span class="day-number">01</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم الأول</span>
+                        <span class="day-desc">مقدمة HTML وبنية المستند</span>
+                        <div class="day-progress-mini" id="progress-mini-1"></div>
+                    </div>
+                    <span class="day-icon">🏗️</span>
+                </button>
+
+                <button class="day-card" onclick="selectDay(2)" id="day-card-2">
+                    <div class="day-badge-icon" id="badge-2"></div>
+                    <span class="day-number">02</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم الثاني</span>
+                        <span class="day-desc">تنسيق النصوص والقوائم</span>
+                        <div class="day-progress-mini" id="progress-mini-2"></div>
+                    </div>
+                    <span class="day-icon">📝</span>
+                </button>
+
+                <button class="day-card" onclick="selectDay(3)" id="day-card-3">
+                    <div class="day-badge-icon" id="badge-3"></div>
+                    <span class="day-number">03</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم الثالث</span>
+                        <span class="day-desc">الروابط والصور</span>
+                        <div class="day-progress-mini" id="progress-mini-3"></div>
+                    </div>
+                    <span class="day-icon">🔗</span>
+                </button>
+
+                <button class="day-card" onclick="selectDay(4)" id="day-card-4">
+                    <div class="day-badge-icon" id="badge-4"></div>
+                    <span class="day-number">04</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم الرابع</span>
+                        <span class="day-desc">الجداول</span>
+                        <div class="day-progress-mini" id="progress-mini-4"></div>
+                    </div>
+                    <span class="day-icon">📊</span>
+                </button>
+
+                <button class="day-card" onclick="selectDay(5)" id="day-card-5">
+                    <div class="day-badge-icon" id="badge-5"></div>
+                    <span class="day-number">05</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم الخامس</span>
+                        <span class="day-desc">النماذج - الجزء الأول</span>
+                        <div class="day-progress-mini" id="progress-mini-5"></div>
+                    </div>
+                    <span class="day-icon">📋</span>
+                </button>
+
+                <button class="day-card" onclick="selectDay(6)" id="day-card-6">
+                    <div class="day-badge-icon" id="badge-6"></div>
+                    <span class="day-number">06</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم السادس</span>
+                        <span class="day-desc">النماذج + Semantic HTML</span>
+                        <div class="day-progress-mini" id="progress-mini-6"></div>
+                    </div>
+                    <span class="day-icon">🧩</span>
+                </button>
+
+                <button class="day-card day-card-final" onclick="selectDay(7)" id="day-card-7">
+                    <div class="day-badge-icon" id="badge-7"></div>
+                    <span class="day-number">07</span>
+                    <div class="day-info">
+                        <span class="day-title">اليوم السابع</span>
+                        <span class="day-desc">الوسائط والمشروع النهائي</span>
+                        <div class="day-progress-mini" id="progress-mini-7"></div>
+                    </div>
+                    <span class="day-icon">🎬</span>
+                </button>
+            </div>
+
+            <!-- أزرار إضافية -->
+            <div class="extra-buttons">
+                <button class="extra-btn" onclick="openGlossary()">
+                    <span>📖</span> قاموس المصطلحات
+                </button>
+                <button class="extra-btn" onclick="openAchievements()">
+                    <span>🏆</span> الإنجازات
+                </button>
+            </div>
+        </div>
+
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div id="main-content" class="main-content hidden">
+        <header class="header">
+            <button class="back-btn" onclick="goBack()">
+                <span>→</span> العودة
+            </button>
+            <div class="header-title">
+                <span id="current-day-badge" class="day-badge">اليوم الأول</span>
+                <h1 id="current-day-title">مقدمة HTML وبنية المستند</h1>
+            </div>
+            <div class="header-controls">
+                <div class="font-controls">
+                    <button class="font-btn" onclick="changeFontSize(-1)" title="تصغير">A-</button>
+                    <button class="font-btn" onclick="changeFontSize(1)" title="تكبير">A+</button>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <span id="progress-text" class="progress-text">0%</span>
+                </div>
+                <div class="points-display">
+                    <span>⭐</span>
+                    <span id="current-points">0</span>
+                </div>
+            </div>
+        </header>
+
+        <nav id="lessons-nav" class="lessons-nav"></nav>
+
+        <main id="lesson-content" class="lesson-content"></main>
+
+        <div class="navigation-buttons">
+            <button id="prev-btn" class="nav-btn prev-btn" onclick="previousLesson()">
+                <span>←</span> الدرس السابق
+            </button>
+            <button id="next-btn" class="nav-btn next-btn" onclick="nextLesson()">
+                الدرس التالي <span>→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- نافذة الكويز -->
+    <div id="quiz-modal" class="modal hidden">
+        <div class="modal-content quiz-content">
+            <div class="modal-header">
+                <h2>📝 اختبار سريع</h2>
+                <button class="close-btn" onclick="closeQuiz()">×</button>
+            </div>
+            <div id="quiz-body" class="quiz-body"></div>
+            <div class="quiz-footer">
+                <button id="submit-quiz" class="submit-quiz-btn" onclick="submitQuiz()">تحقق من الإجابات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة الإنجازات -->
+    <div id="achievements-modal" class="modal hidden">
+        <div class="modal-content achievements-content">
+            <div class="modal-header">
+                <h2>🏆 إنجازاتك</h2>
+                <button class="close-btn" onclick="closeAchievements()">×</button>
+            </div>
+            <div id="achievements-body" class="achievements-body"></div>
+        </div>
+    </div>
+
+    <!-- نافذة القاموس -->
+    <div id="glossary-modal" class="modal hidden">
+        <div class="modal-content glossary-content">
+            <div class="modal-header">
+                <h2>📖 قاموس مصطلحات HTML</h2>
+                <button class="close-btn" onclick="closeGlossary()">×</button>
+            </div>
+            <div class="glossary-search">
+                <input type="text" id="glossary-search" placeholder="ابحثي عن مصطلح..." oninput="filterGlossary()">
+            </div>
+            <div id="glossary-body" class="glossary-body"></div>
+        </div>
+    </div>
+
+    <!-- إشعار الإنجاز -->
+    <div id="achievement-notification" class="achievement-notification hidden">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+            <span class="achievement-title">إنجاز جديد!</span>
+            <span id="achievement-name" class="achievement-name"></span>
+        </div>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="js/data/glossary.js"></script>
+    <script src="js/data/quizzes.js"></script>
+    <script src="js/data/achievements.js"></script>
+    <script src="js/lessons/day1.js"></script>
+    <script src="js/lessons/day2.js"></script>
+    <script src="js/lessons/day3.js"></script>
+    <script src="js/lessons/day4.js"></script>
+    <script src="js/lessons/day5.js"></script>
+    <script src="js/lessons/day6.js"></script>
+    <script src="js/lessons/day7.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
