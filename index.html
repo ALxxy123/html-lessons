@@ -40,6 +40,26 @@
                 </div>
             </div>
 
+            <!-- اختيار الدورة -->
+            <div class="course-selector">
+                <button class="course-card active" id="course-html" onclick="selectCourse('html')">
+                    <div class="course-icon">🌐</div>
+                    <div class="course-info">
+                        <span class="course-name">HTML</span>
+                        <span class="course-duration">7 أيام</span>
+                    </div>
+                    <div class="course-progress" id="html-progress">0%</div>
+                </button>
+                <button class="course-card" id="course-css" onclick="selectCourse('css')">
+                    <div class="course-icon">🎨</div>
+                    <div class="course-info">
+                        <span class="course-name">CSS</span>
+                        <span class="course-duration">14 يوم</span>
+                    </div>
+                    <div class="course-progress" id="css-progress">0%</div>
+                </button>
+            </div>
+
             <div class="days-grid">
                 <button class="day-card" onclick="selectDay(1)" id="day-card-1">
                     <div class="day-badge-icon" id="badge-1"></div>
@@ -228,9 +248,14 @@
     </div>
 
     <!-- ملفات JavaScript -->
+    <!-- بيانات HTML -->
     <script src="js/data/glossary.js"></script>
     <script src="js/data/quizzes.js"></script>
     <script src="js/data/achievements.js"></script>
+    <!-- بيانات CSS -->
+    <script src="js/data/css-glossary.js"></script>
+    <script src="js/data/css-quizzes.js"></script>
+    <!-- دروس HTML -->
     <script src="js/lessons/day1.js"></script>
     <script src="js/lessons/day2.js"></script>
     <script src="js/lessons/day3.js"></script>
@@ -238,6 +263,22 @@
     <script src="js/lessons/day5.js"></script>
     <script src="js/lessons/day6.js"></script>
     <script src="js/lessons/day7.js"></script>
+    <!-- دروس CSS -->
+    <script src="js/css-lessons/day1.js"></script>
+    <script src="js/css-lessons/day2.js"></script>
+    <script src="js/css-lessons/day3.js"></script>
+    <script src="js/css-lessons/day4.js"></script>
+    <script src="js/css-lessons/day5.js"></script>
+    <script src="js/css-lessons/day6.js"></script>
+    <script src="js/css-lessons/day7.js"></script>
+    <script src="js/css-lessons/day8.js"></script>
+    <script src="js/css-lessons/day9.js"></script>
+    <script src="js/css-lessons/day10.js"></script>
+    <script src="js/css-lessons/day11.js"></script>
+    <script src="js/css-lessons/day12.js"></script>
+    <script src="js/css-lessons/day13.js"></script>
+    <script src="js/css-lessons/day14.js"></script>
+    <!-- التطبيق -->
     <script src="js/storage.js"></script>
     <script src="js/app.js"></script>
 </body>

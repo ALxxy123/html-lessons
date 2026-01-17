@@ -61,6 +61,88 @@ body {
 .stat-label { font-size: 12px; color: var(--text-muted); }
 
 /* ========================================
+   اختيار الدورة
+======================================== */
+.course-selector {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.course-card {
+    background: linear-gradient(145deg, var(--bg-card), var(--bg-light));
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius);
+    padding: 25px 40px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-width: 220px;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 40px rgba(82, 183, 136, 0.15);
+}
+
+.course-card.active {
+    border-color: var(--accent);
+    background: linear-gradient(145deg, rgba(82, 183, 136, 0.1), rgba(45, 106, 79, 0.1));
+    box-shadow: 0 0 30px rgba(82, 183, 136, 0.2);
+}
+
+.course-card.active.css-theme {
+    border-color: #a855f7;
+    background: linear-gradient(145deg, rgba(168, 85, 247, 0.1), rgba(126, 34, 206, 0.1));
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+}
+
+.course-icon {
+    font-size: 48px;
+}
+
+.course-info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.course-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.course-duration {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.course-progress {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(82, 183, 136, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+@media (max-width: 600px) {
+    .course-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+    .course-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* ========================================
    شاشة الترحيب
 ======================================== */
 .welcome-screen {

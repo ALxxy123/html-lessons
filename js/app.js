@@ -3,21 +3,129 @@
 // ========================================
 
 // متغيرات عامة
+let currentCourse = 'html'; // html or css
 let currentDay = 1;
 let currentLessonIndex = 0;
 let completedLessons = new Set();
 let currentQuizAnswers = {};
 
-// خريطة الأيام
-const daysInfo = {
-    1: { badge: 'اليوم الأول', title: 'مقدمة HTML وبنية المستند', lessons: day1Lessons },
-    2: { badge: 'اليوم الثاني', title: 'تنسيق النصوص والقوائم', lessons: day2Lessons },
-    3: { badge: 'اليوم الثالث', title: 'الروابط والصور', lessons: day3Lessons },
-    4: { badge: 'اليوم الرابع', title: 'الجداول', lessons: day4Lessons },
-    5: { badge: 'اليوم الخامس', title: 'النماذج - الجزء الأول', lessons: day5Lessons },
-    6: { badge: 'اليوم السادس', title: 'النماذج + Semantic HTML', lessons: day6Lessons },
-    7: { badge: 'اليوم السابع', title: 'الوسائط والمشروع النهائي', lessons: day7Lessons }
+// خريطة أيام HTML
+const htmlDaysInfo = {
+    1: { badge: 'اليوم الأول', title: 'مقدمة HTML وبنية المستند', lessons: day1Lessons, icon: '🏗️' },
+    2: { badge: 'اليوم الثاني', title: 'تنسيق النصوص والقوائم', lessons: day2Lessons, icon: '📝' },
+    3: { badge: 'اليوم الثالث', title: 'الروابط والصور', lessons: day3Lessons, icon: '🔗' },
+    4: { badge: 'اليوم الرابع', title: 'الجداول', lessons: day4Lessons, icon: '📊' },
+    5: { badge: 'اليوم الخامس', title: 'النماذج - الجزء الأول', lessons: day5Lessons, icon: '📋' },
+    6: { badge: 'اليوم السادس', title: 'النماذج + Semantic HTML', lessons: day6Lessons, icon: '🧩' },
+    7: { badge: 'اليوم السابع', title: 'الوسائط والمشروع النهائي', lessons: day7Lessons, icon: '🎬' }
 };
+
+// خريطة أيام CSS
+const cssDaysInfo = {
+    1: { badge: 'اليوم الأول', title: 'مقدمة CSS والمحددات', lessons: cssDay1Lessons, icon: '🎨' },
+    2: { badge: 'اليوم الثاني', title: 'الألوان والخلفيات', lessons: cssDay2Lessons, icon: '🌈' },
+    3: { badge: 'اليوم الثالث', title: 'Box Model والمسافات', lessons: cssDay3Lessons, icon: '📦' },
+    4: { badge: 'اليوم الرابع', title: 'Typography والخطوط', lessons: cssDay4Lessons, icon: '🔤' },
+    5: { badge: 'اليوم الخامس', title: 'المحددات المتقدمة', lessons: cssDay5Lessons, icon: '🎯' },
+    6: { badge: 'اليوم السادس', title: 'Position والترتيب', lessons: cssDay6Lessons, icon: '📍' },
+    7: { badge: 'اليوم السابع', title: 'Flexbox الأساسي', lessons: cssDay7Lessons, icon: '📐' },
+    8: { badge: 'اليوم الثامن', title: 'Flexbox المتقدم', lessons: cssDay8Lessons, icon: '🔧' },
+    9: { badge: 'اليوم التاسع', title: 'CSS Grid الأساسي', lessons: cssDay9Lessons, icon: '🔲' },
+    10: { badge: 'اليوم العاشر', title: 'CSS Grid المتقدم', lessons: cssDay10Lessons, icon: '⚡' },
+    11: { badge: 'اليوم الحادي عشر', title: 'Responsive Design', lessons: cssDay11Lessons, icon: '📱' },
+    12: { badge: 'اليوم الثاني عشر', title: 'Transitions والتأثيرات', lessons: cssDay12Lessons, icon: '✨' },
+    13: { badge: 'اليوم الثالث عشر', title: 'CSS Animations', lessons: cssDay13Lessons, icon: '🎬' },
+    14: { badge: 'اليوم الرابع عشر', title: 'Variables والمشروع', lessons: cssDay14Lessons, icon: '🏆' }
+};
+
+// للتوافق مع الكود القديم
+let daysInfo = htmlDaysInfo;
+
+// الحصول على معلومات الدورة الحالية
+function getCurrentDaysInfo() {
+    return currentCourse === 'css' ? cssDaysInfo : htmlDaysInfo;
+}
+
+function getTotalDays() {
+    return currentCourse === 'css' ? 14 : 7;
+}
+
+function getCurrentQuizzes() {
+    return currentCourse === 'css' ? cssQuizzes : quizzes;
+}
+
+function getCurrentGlossary() {
+    return currentCourse === 'css' ? cssGlossary : glossaryTerms;
+}
+
+// ========================================
+// اختيار الدورة
+// ========================================
+
+function selectCourse(course) {
+    currentCourse = course;
+    daysInfo = getCurrentDaysInfo();
+
+    // تحديث الأزرار النشطة
+    document.getElementById('course-html').classList.toggle('active', course === 'html');
+    document.getElementById('course-css').classList.toggle('active', course === 'css');
+
+    // تحديث شبكة الأيام
+    updateDaysGrid();
+
+    // تحديث عنوان القاموس
+    const glossaryTitle = document.querySelector('#glossary-modal .modal-header h2');
+    if (glossaryTitle) {
+        glossaryTitle.textContent = course === 'css' ? '📖 قاموس مصطلحات CSS' : '📖 قاموس مصطلحات HTML';
+    }
+
+    // تحديث عرض الأيام المكتملة
+    updateStatsDisplay();
+}
+
+function updateDaysGrid() {
+    const grid = document.querySelector('.days-grid');
+    const days = getCurrentDaysInfo();
+    const totalDays = getTotalDays();
+
+    let html = '';
+    for (let day = 1; day <= totalDays; day++) {
+        const info = days[day];
+        const isFinal = day === totalDays;
+        html += `
+            <button class="day-card ${isFinal ? 'day-card-final' : ''}" onclick="selectDay(${day})" id="day-card-${day}">
+                <div class="day-badge-icon" id="badge-${day}"></div>
+                <span class="day-number">${String(day).padStart(2, '0')}</span>
+                <div class="day-info">
+                    <span class="day-title">${info.badge}</span>
+                    <span class="day-desc">${info.title}</span>
+                    <div class="day-progress-mini" id="progress-mini-${day}"></div>
+                </div>
+                <span class="day-icon">${info.icon}</span>
+            </button>
+        `;
+    }
+    grid.innerHTML = html;
+
+    // تحديث شارات الإكمال
+    updateDayCards();
+}
+
+function updateDayCards() {
+    const progress = loadProgress();
+    const courseProgress = currentCourse === 'css' ? (progress.css || {}) : progress;
+    const completedDays = courseProgress.completedDays || [];
+    const totalDays = getTotalDays();
+
+    for (let day = 1; day <= totalDays; day++) {
+        const badge = document.getElementById(`badge-${day}`);
+        const card = document.getElementById(`day-card-${day}`);
+        if (badge && completedDays.includes(day)) {
+            badge.innerHTML = '✅';
+            if (card) card.classList.add('completed');
+        }
+    }
+}
 
 // ========================================
 // التنقل الرئيسي
@@ -27,6 +135,7 @@ function selectDay(day) {
     currentDay = day;
     currentLessonIndex = 0;
     completedLessons.clear();
+    daysInfo = getCurrentDaysInfo();
 
     markDayVisited(day);
 
@@ -40,14 +149,14 @@ function selectDay(day) {
 }
 
 function updateDayInfo() {
-    const info = daysInfo[currentDay];
+    const info = getCurrentDaysInfo()[currentDay];
     document.getElementById('current-day-badge').textContent = info.badge;
     document.getElementById('current-day-title').textContent = info.title;
 }
 
 function buildLessonsNav() {
     const nav = document.getElementById('lessons-nav');
-    const lessons = daysInfo[currentDay].lessons;
+    const lessons = getCurrentDaysInfo()[currentDay].lessons;
 
     // إضافة زر الاختبار في النهاية
     const lessonsHtml = lessons.map((lesson, index) => `
@@ -67,7 +176,7 @@ function buildLessonsNav() {
 }
 
 function showLesson(index) {
-    const lessons = daysInfo[currentDay].lessons;
+    const lessons = getCurrentDaysInfo()[currentDay].lessons;
     if (index < 0 || index >= lessons.length) return;
 
     currentLessonIndex = index;
@@ -77,7 +186,7 @@ function showLesson(index) {
     content.scrollTop = 0;
 
     // إضافة نقاط عند زيارة درس جديد (يتم التحقق من التكرار داخل addPoints)
-    addPoints(5, false, `day${currentDay}_lesson${index}`);
+    addPoints(5, false, `${currentCourse}_day${currentDay}_lesson${index}`);
 
     updateTabs();
     updateNavigationButtons();
@@ -89,9 +198,10 @@ function showLesson(index) {
         markLessonComplete(currentDay, index, lessons.length);
     }
 
-    // تشغيل الكود إذا كان هناك محرر
+    // تشغيل الكود إذا كان هناك محرر HTML
     setTimeout(() => {
         if (document.getElementById('code-input')) runCode();
+        if (document.getElementById('css-input')) runCSSCode();
     }, 100);
 }
 
@@ -104,7 +214,7 @@ function updateTabs() {
 }
 
 function updateNavigationButtons() {
-    const lessons = daysInfo[currentDay].lessons;
+    const lessons = getCurrentDaysInfo()[currentDay].lessons;
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
 
@@ -124,7 +234,7 @@ function updateNavigationButtons() {
 }
 
 function updateProgress() {
-    const lessons = daysInfo[currentDay].lessons;
+    const lessons = getCurrentDaysInfo()[currentDay].lessons;
     const progress = ((currentLessonIndex + 1) / lessons.length) * 100;
     document.getElementById('progress-fill').style.width = `${progress}%`;
     document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
@@ -137,7 +247,7 @@ function previousLesson() {
 }
 
 function nextLesson() {
-    const lessons = daysInfo[currentDay].lessons;
+    const lessons = getCurrentDaysInfo()[currentDay].lessons;
     if (currentLessonIndex < lessons.length - 1) {
         showLesson(currentLessonIndex + 1);
     }
@@ -180,6 +290,25 @@ function runCode() {
     output.innerHTML = bodyMatch ? bodyMatch[1] : code;
 }
 
+// تشغيل CSS في المحرر التفاعلي
+function runCSSCode() {
+    const input = document.getElementById('css-input');
+    const output = document.getElementById('css-preview-output');
+    if (!input || !output) return;
+
+    markCodeRun();
+
+    // إزالة الستايل القديم
+    const oldStyle = document.getElementById('css-preview-style');
+    if (oldStyle) oldStyle.remove();
+
+    // إنشاء ستايل جديد
+    const style = document.createElement('style');
+    style.id = 'css-preview-style';
+    style.textContent = input.value;
+    output.appendChild(style);
+}
+
 // ========================================
 // تغيير حجم الخط
 // ========================================
@@ -204,7 +333,7 @@ function escapeHtml(text) {
 }
 
 function openDayQuiz() {
-    const quiz = quizzes[currentDay];
+    const quiz = getCurrentQuizzes()[currentDay];
     if (!quiz) return;
 
     currentQuizAnswers = {};
@@ -238,7 +367,7 @@ function selectQuizOption(questionIndex, optionIndex) {
 }
 
 function submitQuiz() {
-    const quiz = quizzes[currentDay];
+    const quiz = getCurrentQuizzes()[currentDay];
     let correct = 0;
 
     quiz.forEach((q, qIndex) => {
@@ -295,18 +424,21 @@ function closeQuiz() {
 // ========================================
 
 function openGlossary() {
-    const glossaryBody = document.getElementById('glossary-body');
-    renderGlossary(glossaryTerms);
+    const terms = getCurrentGlossary();
+    renderGlossary(terms);
     document.getElementById('glossary-modal').classList.remove('hidden');
 }
 
 function renderGlossary(terms) {
     const glossaryBody = document.getElementById('glossary-body');
+    // تحقق من وجود خاصية code (موجودة في HTML glossary فقط)
+    const hasCode = terms.length > 0 && terms[0].code !== undefined;
+
     glossaryBody.innerHTML = terms.map(item => `
         <div class="glossary-item">
             <div class="glossary-term">
                 ${item.term}
-                <code>${escapeHtml(item.code)}</code>
+                ${hasCode ? `<code>${escapeHtml(item.code)}</code>` : ''}
             </div>
             <div class="glossary-def">${item.definition}</div>
         </div>
@@ -315,9 +447,12 @@ function renderGlossary(terms) {
 
 function filterGlossary() {
     const search = document.getElementById('glossary-search').value.toLowerCase();
-    const filtered = glossaryTerms.filter(item =>
+    const terms = getCurrentGlossary();
+    const hasCode = terms.length > 0 && terms[0].code !== undefined;
+
+    const filtered = terms.filter(item =>
         item.term.toLowerCase().includes(search) ||
-        item.code.toLowerCase().includes(search) ||
+        (hasCode && item.code && item.code.toLowerCase().includes(search)) ||
         item.definition.toLowerCase().includes(search)
     );
     renderGlossary(filtered);
@@ -369,6 +504,7 @@ document.addEventListener('keydown', (e) => {
 // تشغيل الكود عند الكتابة
 document.addEventListener('input', (e) => {
     if (e.target.id === 'code-input') runCode();
+    if (e.target.id === 'css-input') runCSSCode();
 });
 
 // إغلاق النوافذ بالنقر خارجها
